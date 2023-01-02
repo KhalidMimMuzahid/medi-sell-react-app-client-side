@@ -9,8 +9,6 @@ const Navbar = () => {
   const navElements = [
     { navElement: "Home", link: "/" },
     { navElement: "DashBoard", link: "/dashboard" },
-    { navElement: "SignIn", link: "/signin" },
-    { navElement: "SignUp", link: "/signup" },
   ];
   const location = useLocation().pathname;
   const handleSignOut = () => {

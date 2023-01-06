@@ -20,6 +20,9 @@ const useRole = () => {
             setIsRoleLoading(false);
           }
         });
+    } else {
+      setRole(null);
+      setIsRoleLoading(false);
     }
   }, [currentUser]);
 

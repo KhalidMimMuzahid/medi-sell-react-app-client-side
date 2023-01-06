@@ -121,9 +121,14 @@ const SellingMedicine = () => {
     searchField.value = medicineName;
     setSearchKeyResults([]);
     setQueryKey(medicineName);
-    console.log();
+    // console.log("xxxxxxxxxxxxxxxxxxxx");
   };
-
+  const handleOnBlur = () => {
+    setTimeout(function () {
+      setSearchKeyResults([]);
+      setSearchKey("");
+    }, 0);
+  };
   return (
     <div className="w-full flex flex-col items-center px-6 md:mt-8">
       <h1>this is selling medicine</h1>
@@ -155,10 +160,7 @@ const SellingMedicine = () => {
             </div>
             <input
               onChange={(e) => setSearchKey(e.target.value)}
-              onBlur={() => {
-                setSearchKeyResults([]);
-                setSearchKey("");
-              }}
+              onBlur={handleOnBlur}
               onFocus={(e) => setSearchKey(e.target.value)}
               name="queryKey"
               type="search"
@@ -181,6 +183,7 @@ const SellingMedicine = () => {
               {searchKeyResults.map((eachResult) => (
                 <li
                   onClick={() => handleMedicineClick(eachResult?.medicineName)}
+                  // onClick={() => console.log("xxxxxxxxxx")}
                   key={eachResult._id}
                   className="block w-full bg-primary text-white font-bold px-4 py-1 hover:bg-blue-800 hover:cursor-pointer"
                 >

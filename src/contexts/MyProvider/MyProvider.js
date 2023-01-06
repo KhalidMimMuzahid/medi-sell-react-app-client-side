@@ -11,6 +11,7 @@ import {
 } from "firebase/auth";
 
 import { app } from "../../firebase/firebase.config";
+import useRole from "../../useHooks/useRole/useRole";
 
 const auth = getAuth(app);
 export const MyContext = createContext();
@@ -44,6 +45,16 @@ const MyProvider = ({ children }) => {
     });
     return () => unSUbscribe();
   }, []);
+
+  // useEffect(() => {
+  //   if (currentUser && currentUser?.email) {
+  //     fetch(`http://localhost:5000/checkrole?email=${currentUser?.email}`)
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         console.log(data);
+  //       });
+  //   }
+  // }, [currentUser]);
 
   const info = {
     googleSignIn,

@@ -23,7 +23,7 @@ const Loader = ({ type }) => {
           width="80"
           ariaLabel="MagnifyingGlass-loading"
           wrapperStyle={{}}
-          wrapperClass="MagnifyingGlass-wrapper"
+          wrapperclassName="MagnifyingGlass-wrapper"
           glassColor="#c0efff"
           color="#e15b64"
         />

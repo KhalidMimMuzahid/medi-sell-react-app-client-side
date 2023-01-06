@@ -1,16 +1,48 @@
 import React, { useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { RiMenu2Fill, RiMenu3Line } from "react-icons/ri";
 import mediSell from "../../assets/logos/mediSell.png";
 import { MyContext } from "../../contexts/MyProvider/MyProvider";
 import profileDemo from "../../assets/images/profileDemo.png";
+import useRole from "../../useHooks/useRole/useRole";
+import Loader from "../../Components/Loader/Loader";
 const Navbar = () => {
   const { currentUser, logOut } = useContext(MyContext);
+  const location = useLocation().pathname;
   console.log("current user", currentUser);
+  const { role, isRoleLoading } = useRole();
+  console.log("role :", role);
+  if (isRoleLoading) {
+    return (
+      <div className="h-screen w-full flex items-center justify-center ">
+        <Loader />
+      </div>
+    );
+  }
+
   const navElements = [
     { navElement: "Home", link: "/" },
     { navElement: "DashBoard", link: "/dashboard" },
   ];
-  const location = useLocation().pathname;
+  const roleElements = (
+    <>
+      {role === "user" && (
+        <li>
+          <Link to="/sellingmedicine">Medicine</Link>
+        </li>
+      )}
+      {role === "NGO" && (
+        <li>
+          <Link to="/donatingmedicine">Medicine</Link>
+        </li>
+      )}
+      {/* {role === "admin" && (
+        <li>
+          <Link to="/donatingmedicine">Medicine</Link>
+        </li>
+      )} */}
+    </>
+  );
   const handleSignOut = () => {
     logOut()
       .then(() => {
@@ -26,7 +58,7 @@ const Navbar = () => {
         <div className="navbar-start">
           <div className="dropdown">
             <label tabIndex={0} className="btn btn-ghost lg:hidden">
-              <svg
+              {/* <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5"
                 fill="none"
@@ -39,7 +71,8 @@ const Navbar = () => {
                   strokeWidth="2"
                   d="M4 6h16M4 12h8m-8 6h16"
                 />
-              </svg>
+              </svg> */}
+              <RiMenu2Fill className="text-3xl" />
             </label>
             <ul
               tabIndex={0}
@@ -50,10 +83,13 @@ const Navbar = () => {
                   <Link to={eachElement?.link}>{eachElement?.navElement}</Link>
                 </li>
               ))}
+              {roleElements}
             </ul>
           </div>
-          {/* <a className="btn btn-ghost normal-case text-xl">daisyUI</a> */}
-          <Link className="w-20" to="/">
+          <Link
+            className="w-20 lg:hover:shadow-lg lg:hover:shadow-black lg:hover:opacity-100 lg:hover:bg-blend-darken rounded-3xl"
+            to="/"
+          >
             <img src={mediSell} alt="" className="w-full" />
           </Link>
         </div>
@@ -64,15 +100,17 @@ const Navbar = () => {
                 <Link to={eachElement?.link}>{eachElement?.navElement}</Link>
               </li>
             ))}
+            {roleElements}
           </ul>
         </div>
         <div className="navbar-end">
-          {location === "/dashboard" && (
+          {location.startsWith("/dashboard") && (
             <label
+              tabIndex={0}
               htmlFor="my-drawer-2"
-              className="btn btn-primary drawer-button lg:hidden mr-2"
+              className=" btn btn-ghost lg:hidden mr-2"
             >
-              Open drawer
+              <RiMenu3Line className="  text-3xl " />
             </label>
           )}
           {currentUser && currentUser?.uid ? (

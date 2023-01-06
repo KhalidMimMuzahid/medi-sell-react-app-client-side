@@ -6,7 +6,7 @@ import "react-day-picker/dist/style.css";
 import { MyContext } from "../../../contexts/MyProvider/MyProvider";
 import uploadImageToImageBB from "../../../utilities/uploadImageToImageBB/uploadImageToImageBB";
 import { toast } from "react-toastify";
-const ResellMedicine = () => {
+const DonateMedicine = () => {
   const {
     register,
     handleSubmit,
@@ -34,15 +34,11 @@ const ResellMedicine = () => {
     const postDate = format(today, "PP");
     const {
       medicineName,
-      newPrice: newPriceString,
-      offerPrice: offerPriceString,
       expiredDate,
       prescriptionReport,
       quantity: quantityString,
     } = data;
     const quantity = parseInt(quantityString);
-    const newPrice = parseInt(newPriceString);
-    const offerPrice = parseInt(offerPriceString);
     const image = prescriptionReport[0];
     // console.log(
     //   "expiredDate :",
@@ -62,26 +58,23 @@ const ResellMedicine = () => {
         // if image succesfully uploaded , then ,
         if (imageLink) {
           // console.log("imageLink", imageLink);
-          const sellingMedicineInfo = {
+          const donatingMedicineInfo = {
             medicineName,
-            newPrice,
-            offerPrice,
             quantity,
             expiredDate,
             postDate,
-            type: "for-sold",
-            sellingStatus: "packaged",
-            payingStatus: "unpaid",
+            type: "for-donate",
+            donatingStatus: "packaged",
             prescriptionReport: imageLink,
             sellerEmail: email,
             sellerImage: photoURL,
             sellerName: displayName,
           };
 
-          fetch("http://localhost:5000/sellmedicine", {
+          fetch("http://localhost:5000/donatemedicine", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(sellingMedicineInfo),
+            body: JSON.stringify(donatingMedicineInfo),
           })
             .then((res) => res.json())
             .then((data) => {
@@ -102,7 +95,7 @@ const ResellMedicine = () => {
     <div className="w-full flex flex-col items-center px-6 md:mt-8">
       <div className="text-center">
         <h1 className="text-4xl font-extrabold text-primary my-4">
-          Reselling Center
+          Donating Center
         </h1>
       </div>
       <div className="w-full max-w-md  md:max-w-md lg:max-w-lg">
@@ -132,93 +125,32 @@ const ResellMedicine = () => {
               </p>
             )}
           </div>
-          <div className="mb-6 flex gap-2">
-            <div className="w-1/3">
-              <label
-                for="new-price"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white w-full"
-              >
-                new price
-              </label>
-              <input
-                {...register("newPrice", {
-                  required: {
-                    value: true,
-                    message: "required",
-                  },
-                  min: { value: 1, message: "invalid input" },
-                  pattern: { value: /[0-9]/, message: "invalid input" },
-                })}
-                type="text"
-                id="new-price"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="newPrice"
-              />
-              {errors?.newPrice && (
-                <p role="alert" className="text-red-500 font-bold">
-                  {errors?.newPrice?.message}
-                </p>
-              )}
-            </div>
-
-            <div className="w-1/3">
-              <label
-                for="offer-price"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white w-full"
-              >
-                offer price
-              </label>
-              <input
-                {...register("offerPrice", {
-                  required: {
-                    value: true,
-                    message: "required",
-                  },
-                  min: { value: 0.01, message: "invalid input" },
-                  pattern: { value: /[0-9]/, message: "invalid input" },
-                })}
-                type="text"
-                id="offer-price"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="offer price"
-              />
-              {errors?.offerPrice && (
-                <p role="alert" className="text-red-500 font-bold">
-                  {errors?.offerPrice?.message}
-                </p>
-              )}
-            </div>
-
-            <div className="w-1/3">
-              <label
-                for="quantity"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white w-full"
-              >
-                quantity
-              </label>
-              <input
-                {...register("quantity", {
-                  required: {
-                    value: true,
-                    message: "required",
-                  },
-                  min: { value: 0.01, message: "invalid input" },
-                  pattern: {
-                    value: /[0-9]/,
-                    message: "provide a number",
-                  },
-                })}
-                type="text"
-                id="quantity"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="quantity"
-              />
-              {errors?.quantity && (
-                <p role="alert" className="text-red-500 font-bold">
-                  {errors?.quantity?.message}
-                </p>
-              )}
-            </div>
+          <div className="mb-6">
+            <label
+              for="medicine-name"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white w-full"
+            >
+              Quantity
+            </label>
+            <input
+              {...register("quantity", {
+                required: {
+                  value: true,
+                  message: "you have to provide quantity",
+                },
+                min: { value: 1, message: "invalid input" },
+                pattern: { value: /[0-9]/, message: "invalid input" },
+              })}
+              type="text"
+              id="medicine-name"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="type your medicine name"
+            />
+            {errors?.quantity && (
+              <p role="alert" className="text-red-500 font-bold">
+                {errors?.quantity?.message}
+              </p>
+            )}
           </div>
           <div className="mb-6">
             <label
@@ -295,4 +227,4 @@ const ResellMedicine = () => {
   );
 };
 
-export default ResellMedicine;
+export default DonateMedicine;

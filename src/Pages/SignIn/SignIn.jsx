@@ -109,9 +109,7 @@ const SignIn = () => {
       <div>
         <div className="flex flex-col items-center min-h-screen pt-6 sm:justify-center sm:pt-0 bg-gray-50">
           <div>
-            <a href="/">
-              <h3 className="text-4xl font-bold text-purple-600">Medi_Sell</h3>
-            </a>
+            <h3 className="text-4xl font-bold text-primary">Medi_Sell</h3>
           </div>
           <div className="w-full px-6 py-4 mt-6 overflow-hidden bg-white shadow-md sm:max-w-lg sm:rounded-lg">
             <form onSubmit={handleSubmit(signInFormSubmit)}>
@@ -168,7 +166,7 @@ const SignIn = () => {
               </div>
 
               <div className="flex items-center mt-4">
-                <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600">
+                <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-primary rounded-md hover:bg-blue-800 focus:outline-none focus:bg-blue-600">
                   Sign In
                 </button>
               </div>
@@ -200,7 +198,7 @@ const SignIn = () => {
             <div className="mt-4 text-grey-600">
               New to myTask_Hub?{" "}
               <span>
-                <Link className="text-purple-600 hover:underline" to="/signup">
+                <Link className="text-primary hover:underline" to="/signup">
                   Go to signUp
                 </Link>
               </span>

@@ -60,6 +60,7 @@ const SellingMedicine = () => {
   //   }
   // }, [queryKey]);
   useEffect(() => {
+    console.log("xx", queryKey);
     if (queryKey.length) {
       fetch(
         `https://medi-sell.vercel.app/searchsellingmedicine?queryKey=${queryKey}`
@@ -127,7 +128,7 @@ const SellingMedicine = () => {
     setTimeout(function () {
       setSearchKeyResults([]);
       setSearchKey("");
-    }, 0);
+    }, 100);
   };
   return (
     <div className="w-full flex flex-col items-center px-6 md:mt-8">

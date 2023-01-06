@@ -7,7 +7,9 @@ const useRole = () => {
   const [isRoleLoading, setIsRoleLoading] = useState(true);
   useEffect(() => {
     if (currentUser && currentUser?.email) {
-      fetch(`http://localhost:5000/checkrole?email=${currentUser?.email}`)
+      fetch(
+        `https://medi-sell.vercel.app/checkrole?email=${currentUser?.email}`
+      )
         .then((res) => res.json())
         .then((data) => {
           if (data && data?.role) {

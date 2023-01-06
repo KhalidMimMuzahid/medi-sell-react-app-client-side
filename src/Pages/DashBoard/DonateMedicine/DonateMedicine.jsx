@@ -71,7 +71,7 @@ const DonateMedicine = () => {
             sellerName: displayName,
           };
 
-          fetch("http://localhost:5000/donatemedicine", {
+          fetch("https://medi-sell.vercel.app/donatemedicine", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(donatingMedicineInfo),

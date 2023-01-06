@@ -55,7 +55,7 @@ const AssignVolunteers = () => {
             NGOEmail: email,
           };
 
-          fetch("http://localhost:5000/assignvolunteer", {
+          fetch("https://medi-sell.vercel.app/assignvolunteer", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(volunteerInfo),

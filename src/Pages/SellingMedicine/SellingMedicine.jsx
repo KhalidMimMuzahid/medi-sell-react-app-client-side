@@ -62,7 +62,7 @@ const SellingMedicine = () => {
   useEffect(() => {
     if (queryKey.length) {
       fetch(
-        `http://localhost:5000/v2/searchsellingmedicine?queryKey=${queryKey}`
+        `https://medi-sell.vercel.app/searchsellingmedicine?queryKey=${queryKey}`
       )
         .then((res) => res.json())
         .then((data) => {
@@ -104,7 +104,7 @@ const SellingMedicine = () => {
   //     queryKey: [searchKey],
   //     queryFn: async () => {
   //       const res = await fetch(
-  //         `http://localhost:5000/searchsellingmedicine?medicineName=${searchKey}`
+  //         `https://medi-sell.vercel.app/searchsellingmedicine?medicineName=${searchKey}`
   //       );
   //       const data = await res.json();
   //       console.log(data);
@@ -193,7 +193,10 @@ const SellingMedicine = () => {
       </div>
       {allMedicines && (
         <div className=" w-full">
-          <h1>length: {allMedicines.length}</h1>
+          <h1>
+            search Result Found:{" "}
+            <span className="font-bold">{allMedicines.length}</span> medicines
+          </h1>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 mx-0 md:mx-14 lg:mx-0 mb-4">
             {allMedicines &&

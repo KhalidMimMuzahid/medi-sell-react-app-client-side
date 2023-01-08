@@ -9,8 +9,8 @@ const Footer = () => {
     },
   ];
   return (
-    <div className="mx-auto ">
-      <footer className="footer p-10 bg-neutral text-neutral-content flex flex-col md:flex-row md:justify-around items-center">
+    <div className="mx-auto">
+      <footer className="footer p-10 bg-neutral text-neutral-content flex flex-col md:flex-row md:justify-around items-center ">
         <div className="flex flex-col md:flex-row md:items-center">
           <div className="avatar w-16 text-center mx-auto">
             <img className="w-full" src={mediSell} alt="" />

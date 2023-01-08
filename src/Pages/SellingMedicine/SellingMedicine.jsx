@@ -31,7 +31,6 @@ const SellingMedicine = () => {
       runFunc();
     } else {
       // TODO: if there have no searchkey then i should take all medicienes form database
-      console.log("oh fuck !");
       setSearchKeyResults([]);
     }
   }, [searchKey]);
@@ -60,7 +59,6 @@ const SellingMedicine = () => {
   //   }
   // }, [queryKey]);
   useEffect(() => {
-    console.log("xx", queryKey);
     if (queryKey.length) {
       fetch(
         `https://medi-sell.vercel.app/searchsellingmedicine?queryKey=${queryKey}`
@@ -68,12 +66,11 @@ const SellingMedicine = () => {
         .then((res) => res.json())
         .then((data) => {
           // all searching medicine is here
-          console.log("allMedicines: ", data);
+          // console.log("allMedicines: ", data);
           setAllMedicines(data);
         });
     } else {
       // TODO: if there have no searchkey then i should take all medicienes form database
-      console.log("oh fuck !");
       setAllMedicines([]);
     }
   }, [queryKey]);
@@ -128,7 +125,7 @@ const SellingMedicine = () => {
     setTimeout(function () {
       setSearchKeyResults([]);
       setSearchKey("");
-    }, 100);
+    }, 200);
   };
   return (
     <div className="w-full flex flex-col items-center px-6 md:mt-8">

@@ -6,6 +6,7 @@ import "react-day-picker/dist/style.css";
 import { MyContext } from "../../../contexts/MyProvider/MyProvider";
 import uploadImageToImageBB from "../../../utilities/uploadImageToImageBB/uploadImageToImageBB";
 import { toast } from "react-toastify";
+import Loader from "../../../Components/Loader/Loader";
 const ResellMedicine = () => {
   const {
     register,
@@ -17,6 +18,7 @@ const ResellMedicine = () => {
   const { currentUser } = useContext(MyContext);
   const [selectedDay, setSelectedDay] = useState(new Date());
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [isPosting, setIsPosting] = useState(false);
   let footer = selectedDay ? (
     <p>You selected {format(selectedDay, "PP")}.</p>
   ) : (
@@ -28,6 +30,7 @@ const ResellMedicine = () => {
     setModalIsOpen(false);
   };
   const handleFormSubmit = (data) => {
+    setIsPosting(true);
     // console.log(data);
     const { email, photoURL, displayName } = currentUser;
     const today = new Date();
@@ -78,7 +81,7 @@ const ResellMedicine = () => {
             sellerName: displayName,
           };
 
-          fetch("https://medi-sell.vercel.app/sellmedicine", {
+          fetch("http://localhost:5000/sellmedicine", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(sellingMedicineInfo),
@@ -88,10 +91,12 @@ const ResellMedicine = () => {
               if (data?.acknowledged) {
                 toast.success("medicine updated successfully");
               }
+              setIsPosting(false);
               // console.log(data);
               reset();
             });
         } else {
+          setIsPosting(false);
           toast.error("something went wrong. Please try again later");
           reset();
           return;
@@ -284,12 +289,14 @@ const ResellMedicine = () => {
             )}
           </div>
           <button
+            disabled={isPosting}
             type="submit"
             className="text-white bg-primary hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full  px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
             Submit
           </button>
         </form>
+        {isPosting && <Loader type="progressor" />}
       </div>
     </div>
   );

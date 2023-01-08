@@ -16,10 +16,13 @@ const DashBoard = () => {
     adminDashboard: (
       <>
         <li>
-          <Link to="members">members</Link>
+          <Link to="members">manage members</Link>
         </li>
-        <li>
+        {/* <li>
           <Link to="approvals">approvals</Link>
+        </li> */}
+        <li>
+          <Link to="reportedmedicines">reported medicines</Link>
         </li>
       </>
     ),
@@ -49,6 +52,9 @@ const DashBoard = () => {
         </li>
         <li>
           <Link to="donatedmedicine">donated Medicine</Link>
+        </li>
+        <li>
+          <Link to="mymedicines">my medicines</Link>
         </li>
         <li>
           <Link to="mybuyer">my buyer</Link>

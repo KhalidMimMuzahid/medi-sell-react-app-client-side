@@ -83,7 +83,12 @@ const DashBoard = () => {
           </Link>
         </li>
         <li>
-          <Link to="soldmedicine">sold Medicine</Link>
+          <Link
+            className="btn btn-primary text-white my-1 focus:text-black"
+            to="soldmedicine"
+          >
+            sold Medicine
+          </Link>
         </li>
         <li>
           <Link

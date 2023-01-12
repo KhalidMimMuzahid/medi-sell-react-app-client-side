@@ -1,80 +1,63 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { MdVerified } from "react-icons/md";
 import { useForm } from "react-hook-form";
+import { MyContext } from "../../../contexts/MyProvider/MyProvider";
 import { toast } from "react-toastify";
 import Loader from "../../../Components/Loader/Loader";
-const EachSellingMedicine = ({
+const EachDonatingMedicine = ({
   eachMedicine,
+  setAllMedicines,
   setReportModalIsOpen,
   setReportingMedicineInfo,
 }) => {
-  // const { currentUser } = useContext(MyContext);
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   watch,
-  //   reset,
-  //   formState: { errors },
-  // } = useForm();
-  // const [reportModalIsOpen, setReportModalIsOpen] = useState(false);
-  // const [isReporting, setIsReporting] = useState(false);
+  const { currentUser } = useContext(MyContext);
   const {
     medicineName,
     expiredDate,
-    newPrice,
-    offerPrice,
-    payingStatus,
     postDate,
     prescriptionReport,
     quantity,
     sellerEmail,
     sellerImage,
     sellerName,
-    sellingStatus,
+    donatingStatus,
     type,
     _id,
   } = eachMedicine;
-  // const handleReportFormSubmit = (data) => {
-  //   setIsReporting(true);
-  //   const { reportingReason } = data;
-  //   const { email, displayName } = currentUser;
-  //   const reportingStatus = {
-  //     _id,
-  //     reportingReason,
-  //     reportingUserEmail: email,
-  //     reportingUserName: displayName,
-  //   };
-  //   fetch("https://medi-sell.vercel.app/reportsellingmedicine", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({ reportingStatus }),
-  //   })
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       if (data?.modifiedCount) {
-  //         toast.success("this medicine has been reported successfully");
-  //         setIsReporting(false);
-  //         setReportModalIsOpen(false);
-  //         setAllMedicines((prevAllMedicine) => {
-  //           const newAllMedicine = prevAllMedicine.map((eachMedicine) => {
-  //             if (eachMedicine._id === _id) {
-  //               eachMedicine.reportingStatus = reportingStatus;
-  //               console.log("id match");
-  //             }
-  //             return eachMedicine;
-  //           });
-  //           return newAllMedicine;
-  //         });
-  //         //   refetch();
-  //       } else {
-  //         toast.error("something went wrong. please try again laterxxxxxxxx");
-  //         setIsReporting(false);
-  //       }
-  //     });
-  // };
+  const handleTakeDonatedMedicine = () => {
+    const { displayName, email, photoURL } = currentUser;
+    const medicineTakerNGOInfo = {
+      ngoName: displayName,
+      ngoEmail: email,
+      ngoPhotoURL: photoURL,
+    };
+    fetch(`https://medi-sell.vercel.app/takedonatedmedicine?_id=${_id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(medicineTakerNGOInfo),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.modifiedCount) {
+          toast.success(`${medicineName} token successfully`);
+          setAllMedicines((prevAllMedicine) => {
+            const newAllMedicine = prevAllMedicine.map((eachStateMedicine) => {
+              if (eachStateMedicine._id === _id) {
+                eachStateMedicine.donatingStatus = "donated";
+                // console.log("id match");
+              }
+              return eachStateMedicine;
+            });
+            return newAllMedicine;
+          });
+        } else {
+          toast.error(`something went wrong, please try again later`);
+        }
+      });
+  };
   return (
     <div className="card w-full bg-base-100 shadow-xl">
       <div className="card-body px-2">
@@ -102,26 +85,30 @@ const EachSellingMedicine = ({
                   </h1>
                 </div>
 
-                <div className="flex justify-start">
+                {/* <div className="flex justify-start">
                   <h1 className=" bg-primary px-2 py-1 w-auto min-w-12">
                     <del className="font-bold text-white text-center">
-                      {newPrice}
+                      newPrice
                     </del>
                     <span className="text-white font-bold text-xl"> ৳</span>
                   </h1>
                   <h1 className="ml-2 bg-primary px-2 py-1 w-auto min-w-12 font-bold text-white">
-                    {offerPrice}{" "}
+                    offerPrice
                     <span className="text-white font-bold text-xl"> ৳</span>
                   </h1>
+                </div> */}
+                <div>
+                  <h1>
+                    Post Date: <span className="font-bold">{postDate}</span>
+                  </h1>
                 </div>
-
                 <div>
                   <h1>
                     expired in, <span className="font-bold">{expiredDate}</span>
                   </h1>
                 </div>
                 <div>
-                  {sellingStatus === "sold" ? (
+                  {donatingStatus === "donated" ? (
                     <h1>Stock Out</h1>
                   ) : (
                     <h1>Available</h1>
@@ -133,16 +120,17 @@ const EachSellingMedicine = ({
 
           <div className="flex md:flex-col justify-between gap-2  p-0">
             <Link
-              to={`/sellingmedicine/medicinedetails/${_id}`}
+              to={`/donatingmedicine/medicinedetails/${_id}`}
               className="btn btn-sm btn-primary grow"
             >
               <button> details</button>
             </Link>
             <button
-              disabled={sellingStatus === "sold"}
+              onClick={handleTakeDonatedMedicine}
+              disabled={donatingStatus === "donated"}
               className="btn btn-sm btn-primary grow"
             >
-              {sellingStatus === "sold" ? "Sold Out" : "buy"}
+              {donatingStatus === "donated" ? "donated" : "Take"}
             </button>
             <label
               htmlFor="report-modal"
@@ -165,4 +153,4 @@ const EachSellingMedicine = ({
   );
 };
 
-export default EachSellingMedicine;
+export default EachDonatingMedicine;

@@ -22,6 +22,8 @@ const Navbar = () => {
 
   const navElements = [
     { navElement: "Home", link: "/" },
+    { navElement: "About Us", link: "/about" },
+    { navElement: "Contact Us", link: "/contact" },
     { navElement: "DashBoard", link: "/dashboard" },
   ];
   const roleElements = (

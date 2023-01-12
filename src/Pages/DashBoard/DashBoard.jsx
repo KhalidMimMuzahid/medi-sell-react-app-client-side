@@ -16,48 +16,98 @@ const DashBoard = () => {
     adminDashboard: (
       <>
         <li>
-          <Link to="members">manage members</Link>
+          <Link
+            className="btn btn-primary text-white my-1 focus:text-black"
+            to="members"
+          >
+            manage members
+          </Link>
         </li>
         {/* <li>
           <Link to="approvals">approvals</Link>
         </li> */}
         <li>
-          <Link to="reportedmedicines">reported medicines</Link>
+          <Link
+            className="btn btn-primary text-white my-1 focus:text-black"
+            to="reportedmedicines"
+          >
+            reported medicines
+          </Link>
         </li>
       </>
     ),
     ngoDashboard: (
       <>
         <li>
-          <Link to="donatedstocks">donated Stocks</Link>
+          <Link
+            className="btn btn-primary text-white my-1 focus:text-black"
+            to="donatedstocks"
+          >
+            donated Stocks
+          </Link>
         </li>
         <li>
-          <Link to="assignvolunteers">assign volunteers</Link>
+          <Link
+            className="btn btn-primary text-white my-1 focus:text-black"
+            to="assignvolunteers"
+          >
+            assign volunteers
+          </Link>
         </li>
         <li>
-          <Link to="ourvolunteers">our volunteers</Link>
+          <Link
+            className="btn btn-primary text-white my-1 focus:text-black"
+            to="ourvolunteers"
+          >
+            our volunteers
+          </Link>
         </li>
       </>
     ),
     userDashboard: (
       <>
         <li>
-          <Link to="resellmedicine">resell Medicine</Link>
+          <Link
+            className="btn btn-primary text-white my-1 focus:text-black"
+            to="resellmedicine"
+          >
+            resell Medicine
+          </Link>
         </li>
         <li>
-          <Link to="donatemedicine">donate Medicine</Link>
+          <Link
+            className="btn btn-primary text-white my-1 focus:text-black"
+            to="donatemedicine"
+          >
+            donate Medicine
+          </Link>
         </li>
         <li>
           <Link to="soldmedicine">sold Medicine</Link>
         </li>
         <li>
-          <Link to="donatedmedicine">donated Medicine</Link>
+          <Link
+            className="btn btn-primary text-white my-1 focus:text-black"
+            to="donatedmedicine"
+          >
+            donated Medicine
+          </Link>
         </li>
         <li>
-          <Link to="mymedicines">my medicines</Link>
+          <Link
+            className="btn btn-primary text-white my-1 focus:text-black"
+            to="mymedicines"
+          >
+            my medicines
+          </Link>
         </li>
         <li>
-          <Link to="mybuyer">my buyer</Link>
+          <Link
+            className="btn btn-primary text-white my-1 focus:text-black"
+            to="mybuyer"
+          >
+            my buyer
+          </Link>
         </li>
       </>
     ),
@@ -71,7 +121,7 @@ const DashBoard = () => {
       </div>
       <div className="drawer-side border-l-4">
         <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
-        <ul className="menu p-4 w-80 bg-base-100 text-base-content">
+        <ul className="menu p-4 w-80  text-base-content">
           {/* Sidebar content here  */}
           {role === "user" && dashboardLink?.userDashboard}
           {role === "NGO" && dashboardLink?.ngoDashboard}

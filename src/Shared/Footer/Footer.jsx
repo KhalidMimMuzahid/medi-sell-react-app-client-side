@@ -12,7 +12,7 @@ const Footer = () => {
     <div className="mx-auto">
       <footer className="footer p-10 bg-neutral text-neutral-content flex flex-col md:flex-row md:justify-around items-center ">
         <div className="flex flex-col md:flex-row md:items-center">
-          <div className="avatar w-16 text-center mx-auto">
+          <div className=" w-16 text-center mx-auto">
             <img className="w-full" src={mediSell} alt="" />
           </div>
           <p>
@@ -22,7 +22,7 @@ const Footer = () => {
           </p>
         </div>
         <div>
-          <p className="footer-title  mx-auto">Social</p>
+          <p className="footer-title z-0  mx-auto">Social</p>
           {/* <div className="grid grid-flow-col gap-4">
         
         </div> */}

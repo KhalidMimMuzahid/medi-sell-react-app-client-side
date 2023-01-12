@@ -7,7 +7,7 @@ import Loader from "../../../Components/Loader/Loader";
 import { useForm } from "react-hook-form";
 import { MyContext } from "../../../contexts/MyProvider/MyProvider";
 import { toast } from "react-toastify";
-const SellingMedicineDetails = () => {
+const DonatingMedicineDetails = () => {
   const medicine_id = useLoaderData();
   const {
     register,
@@ -19,6 +19,7 @@ const SellingMedicineDetails = () => {
   const { currentUser } = useContext(MyContext);
   const [reportModalIsOpen, setReportModalIsOpen] = useState(false);
   const [isReporting, setIsReporting] = useState(false);
+  const [donatingStatus, setDonatingStatus] = useState(null);
   const {
     isLoading,
     isError,
@@ -29,9 +30,10 @@ const SellingMedicineDetails = () => {
     queryKey: [medicine_id],
     queryFn: async () => {
       const res = await fetch(
-        `https://medi-sell.vercel.app/sellingMedicineDetails?_id=${medicine_id}`
+        `https://medi-sell.vercel.app/donatingMedicineDetails?_id=${medicine_id}`
       );
       const data = await res.json();
+      setDonatingStatus(data?.donatingStatus);
       // console.log(data);
       return data;
     },
@@ -44,22 +46,20 @@ const SellingMedicineDetails = () => {
       </div>
     );
   }
-  const {
+  let {
     medicineName,
     expiredDate,
-    newPrice,
-    offerPrice,
-    payingStatus,
     postDate,
     prescriptionReport,
     quantity,
     sellerEmail,
     sellerImage,
     sellerName,
-    sellingStatus,
+    donatingStatus: donatingStatusCurrent,
     type,
     _id,
   } = medicine;
+
   const handleReportFormSubmit = (data) => {
     setIsReporting(true);
     const { reportingReason } = data;
@@ -70,7 +70,7 @@ const SellingMedicineDetails = () => {
       reportingUserEmail: email,
       reportingUserName: displayName,
     };
-    fetch("https://medi-sell.vercel.app/reportsellingmedicine", {
+    fetch("https://medi-sell.vercel.app/reportdonatingmedicine", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -87,6 +87,30 @@ const SellingMedicineDetails = () => {
         } else {
           toast.error("something went wrong. please try again later");
           setIsReporting(false);
+        }
+      });
+  };
+  const handleTakeDonatedMedicine = () => {
+    const { displayName, email, photoURL } = currentUser;
+    const medicineTakerNGOInfo = {
+      ngoName: displayName,
+      ngoEmail: email,
+      ngoPhotoURL: photoURL,
+    };
+    fetch(`https://medi-sell.vercel.app/takedonatedmedicine?_id=${_id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(medicineTakerNGOInfo),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.modifiedCount) {
+          toast.success(`${medicineName} token successfully`);
+          setDonatingStatus("donated");
+        } else {
+          toast.error(`something went wrong, please try again later`);
         }
       });
   };
@@ -128,19 +152,19 @@ const SellingMedicineDetails = () => {
                       {`(${quantity})`}
                     </h1>
                   </div>
-
+                  {/* 
                   <div className="flex justify-start">
                     <h1 className=" bg-primary px-2 py-1 w-auto min-w-12">
                       <del className="font-bold text-white text-center">
-                        {newPrice}
+                        newPrice
                       </del>
                       <span className="text-white font-bold text-xl"> ৳</span>
                     </h1>
                     <h1 className="ml-2 bg-primary px-2 py-1 w-auto min-w-12 font-bold text-white">
-                      {offerPrice}{" "}
+                      offerPrice
                       <span className="text-white font-bold text-xl"> ৳</span>
                     </h1>
-                  </div>
+                  </div> */}
 
                   <div>
                     <h1>
@@ -152,6 +176,13 @@ const SellingMedicineDetails = () => {
                       expired on,{" "}
                       <span className="font-bold">{expiredDate}</span>
                     </h1>
+                  </div>
+                  <div>
+                    {donatingStatus === "donated" ? (
+                      <h1>Stock Out</h1>
+                    ) : (
+                      <h1>Available</h1>
+                    )}
                   </div>
                 </div>
               </div>
@@ -165,10 +196,11 @@ const SellingMedicineDetails = () => {
                 prescription
               </label>
               <button
-                disabled={sellingStatus === "sold"}
+                onClick={handleTakeDonatedMedicine}
+                disabled={donatingStatus === "donated"}
                 className="btn btn-sm btn-primary grow"
               >
-                {sellingStatus === "sold" ? "Stock Out" : "Buy"}
+                {donatingStatus === "donated" ? "donated" : "Take"}
               </button>
               <label
                 onClick={() => setReportModalIsOpen(true)}
@@ -261,4 +293,4 @@ const SellingMedicineDetails = () => {
   );
 };
 
-export default SellingMedicineDetails;
+export default DonatingMedicineDetails;

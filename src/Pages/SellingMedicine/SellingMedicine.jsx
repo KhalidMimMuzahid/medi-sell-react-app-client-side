@@ -1,8 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import * as Realm from "realm-web";
 import EachSellingMedicine from "./EachSellingMedicine/EachSellingMedicine";
+import styles from "../../externalcss/sellingMedicinesResponsive.module.css";
+import { useForm } from "react-hook-form";
+import { MyContext } from "../../contexts/MyProvider/MyProvider";
+import { toast } from "react-toastify";
+import Loader from "../../Components/Loader/Loader";
 const SellingMedicine = () => {
+  const { currentUser } = useContext(MyContext);
+  const {
+    register,
+    handleSubmit,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm();
+  const [reportModalIsOpen, setReportModalIsOpen] = useState(false);
+  const [isReporting, setIsReporting] = useState(false);
+  const [reportingMedicineInfo, setReportingMedicineInfo] = useState(false);
   const [searchKey, setSearchKey] = useState("");
   const [searchKeyResults, setSearchKeyResults] = useState([]);
   const [queryKey, setQueryKey] = useState("");
@@ -127,6 +143,46 @@ const SellingMedicine = () => {
       setSearchKey("");
     }, 200);
   };
+  const handleReportFormSubmit = (data) => {
+    setIsReporting(true);
+    const { reportingReason } = data;
+    const { email, displayName } = currentUser;
+    const reportingStatus = {
+      _id: reportingMedicineInfo?._id,
+      reportingReason,
+      reportingUserEmail: email,
+      reportingUserName: displayName,
+    };
+    fetch("https://medi-sell.vercel.app/reportsellingmedicine", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ reportingStatus }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.modifiedCount) {
+          toast.success("this medicine has been reported successfully");
+          setIsReporting(false);
+          setReportModalIsOpen(false);
+          setAllMedicines((prevAllMedicine) => {
+            const newAllMedicine = prevAllMedicine.map((eachMedicine) => {
+              if (eachMedicine._id === reportingMedicineInfo?._id) {
+                eachMedicine.reportingStatus = reportingStatus;
+                // console.log("id match");
+              }
+              return eachMedicine;
+            });
+            return newAllMedicine;
+          });
+          //   refetch();
+        } else {
+          toast.error("something went wrong. please try again later");
+          setIsReporting(false);
+        }
+      });
+  };
   return (
     <div className="w-full flex flex-col items-center px-6 md:mt-8">
       <h1>this is selling medicine</h1>
@@ -176,8 +232,11 @@ const SellingMedicine = () => {
           </div>
         </form>
         {searchKeyResults && (
-          <div className="w-full flex flex-col items-center px-6 ">
-            <ul className="absolute w-full z-20   max-w-md  md:max-w-md lg:max-w-lg">
+          <div className="w-full flex flex-col items-center  ">
+            {/* px should be zero after 450 width  */}
+            <ul
+              className={`absolute  z-20  w-full   md:max-w-md lg:max-w-lg ${styles.textsearchresponsive}`}
+            >
               {searchKeyResults.map((eachResult) => (
                 <li
                   onClick={() => handleMedicineClick(eachResult?.medicineName)}
@@ -203,12 +262,63 @@ const SellingMedicine = () => {
             {allMedicines &&
               allMedicines.map((eachMedicine) => (
                 <EachSellingMedicine
+                  setReportModalIsOpen={setReportModalIsOpen}
+                  setReportingMedicineInfo={setReportingMedicineInfo}
                   key={eachMedicine?._id}
                   eachMedicine={eachMedicine}
                 />
               ))}
           </div>
         </div>
+      )}
+      {reportModalIsOpen && (
+        <>
+          <input type="checkbox" id="report-modal" className="modal-toggle" />
+          <div className="modal modal-bottom sm:modal-middle ">
+            <div className="modal-box pb-32">
+              <label
+                htmlFor="report-modal"
+                className="btn btn-sm btn-circle absolute right-2 top-2"
+              >
+                ✕
+              </label>
+              <form onSubmit={handleSubmit(handleReportFormSubmit)}>
+                <label
+                  htmlFor="reporting-reason"
+                  className=" block sm:text-lg font-bold my-2"
+                >
+                  why this medicine should be reported?
+                </label>
+
+                <textarea
+                  {...register("reportingReason", {
+                    required: {
+                      value: true,
+                      message:
+                        "you must provide the reason for reporting this medicine",
+                    },
+                  })}
+                  id="reporting-reason"
+                  className="w-full h-24 border px-2 py-2 text-black"
+                  placeholder={`${reportingMedicineInfo?.medicineName} should be reported because of ...`}
+                ></textarea>
+                {errors?.reportingReason && (
+                  <p role="alert" className="text-red-500 font-bold">
+                    {errors?.reportingReason?.message}
+                  </p>
+                )}
+                <button
+                  type="submit"
+                  className="btn w-full my-2"
+                  disabled={isReporting}
+                >
+                  report
+                </button>
+              </form>
+              {isReporting && <Loader type="progressor" />}
+            </div>
+          </div>
+        </>
       )}
     </div>
   );

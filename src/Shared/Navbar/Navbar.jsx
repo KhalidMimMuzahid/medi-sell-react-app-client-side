@@ -6,12 +6,12 @@ import { MyContext } from "../../contexts/MyProvider/MyProvider";
 import profileDemo from "../../assets/images/profileDemo.png";
 import useRole from "../../useHooks/useRole/useRole";
 import Loader from "../../Components/Loader/Loader";
-const Navbar = () => {
+const Navbar = ({ setThemeIsDark, themeIsDark }) => {
   const { currentUser, logOut } = useContext(MyContext);
   const location = useLocation().pathname;
   console.log("current user", currentUser);
   const { role, isRoleLoading } = useRole();
-  console.log("role :", role);
+  console.log("rolexx :", role);
   if (isRoleLoading) {
     return (
       <div className="h-screen w-full flex items-center justify-center ">
@@ -30,12 +30,16 @@ const Navbar = () => {
     <>
       {role === "user" && (
         <li>
-          <Link to="/sellingmedicine">Medicine</Link>
+          <Link to="/sellingmedicine" className="font-bold">
+            Medicine
+          </Link>
         </li>
       )}
       {role === "NGO" && (
         <li>
-          <Link to="/donatingmedicine">Medicine</Link>
+          <Link to="/donatingmedicine" className="font-bold">
+            Medicine
+          </Link>
         </li>
       )}
       {/* {role === "admin" && (
@@ -59,7 +63,7 @@ const Navbar = () => {
       <div className="navbar bg-base-100">
         <div className="navbar-start">
           <div className="dropdown">
-            <label tabIndex={0} className="btn btn-ghost lg:hidden">
+            <label tabIndex={0} className="md:btn btn-ghost lg:hidden">
               {/* <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5"
@@ -82,7 +86,9 @@ const Navbar = () => {
             >
               {navElements?.map((eachElement) => (
                 <li>
-                  <Link to={eachElement?.link}>{eachElement?.navElement}</Link>
+                  <Link to={eachElement?.link} className="font-bold">
+                    {eachElement?.navElement}
+                  </Link>
                 </li>
               ))}
               {roleElements}
@@ -92,25 +98,38 @@ const Navbar = () => {
             className="w-20 lg:hover:shadow-lg lg:hover:shadow-black lg:hover:opacity-100 lg:hover:bg-blend-darken rounded-3xl"
             to="/"
           >
-            <img src={mediSell} alt="" className="w-full" />
+            <img src={mediSell} alt="" className="w-16 md:w-full" />
           </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
             {navElements?.map((eachElement) => (
               <li>
-                <Link to={eachElement?.link}>{eachElement?.navElement}</Link>
+                <Link to={eachElement?.link} className="font-bold">
+                  {eachElement?.navElement}
+                </Link>
               </li>
             ))}
             {roleElements}
           </ul>
         </div>
         <div className="navbar-end">
+          <input
+            onChange={() =>
+              setThemeIsDark((prev) => {
+                localStorage.setItem("themeIsDark", !prev);
+                return !prev;
+              })
+            }
+            type="checkbox"
+            className="toggle  md:toggle-lg  mx-2"
+            checked={themeIsDark}
+          />
           {location.startsWith("/dashboard") && (
             <label
               tabIndex={0}
               htmlFor="my-drawer-2"
-              className=" btn btn-ghost lg:hidden mr-2"
+              className=" md:btn btn-ghost lg:hidden mr-0"
             >
               <RiMenu3Line className="  text-3xl " />
             </label>
@@ -118,12 +137,15 @@ const Navbar = () => {
           {currentUser && currentUser?.uid ? (
             <>
               <div>
-                <button onClick={handleSignOut} className=" btn btn-primary">
+                <button
+                  onClick={handleSignOut}
+                  className=" btn btn-primary btn-sm md:btn-md"
+                >
                   sign Out
                 </button>
               </div>
               <div className="avatar ml-2">
-                <div to="" className="block w-16 rounded-full">
+                <div to="" className="block w-12 md:w-16 rounded-full">
                   <Link>
                     <img
                       src={

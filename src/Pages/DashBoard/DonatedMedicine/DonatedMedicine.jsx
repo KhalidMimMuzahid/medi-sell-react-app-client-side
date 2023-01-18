@@ -20,7 +20,7 @@ const DonatedMedicine = () => {
     queryKey: [],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5000/mydonatingmedicines?sellerEmail=${currentUser?.email}`
+        `https://medi-sell.vercel.app/mydonatingmedicines?sellerEmail=${currentUser?.email}`
       );
       const data = await res.json();
       console.log(data);
@@ -34,12 +34,13 @@ const DonatedMedicine = () => {
       </div>
     );
   }
+
   return (
     <div className="w-full mx-auto">
       <div class="w-full mx-auto max-w-2xl border p-4 bg-white rounded-lg shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
         <div class="flex items-center justify-between mb-4">
           <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">
-            Total Donated Medicines : {DonatedMedicine?.length}
+            Total Donated Medicines : {donatedMedicines?.length}
           </h5>
           <a
             href="#"

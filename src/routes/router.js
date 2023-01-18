@@ -1,7 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../layouts/Main/Main";
-import About from "../Pages/About/About";
-import Contact from "../Pages/Contact/Contact";
 import Approvals from "../Pages/DashBoard/Approvals/Approvals";
 import AssignVolunteers from "../Pages/DashBoard/AssignVolunteers/AssignVolunteers";
 import DashBoard from "../Pages/DashBoard/DashBoard";
@@ -70,8 +68,6 @@ export const router = createBrowserRouter([
         loader: async ({ params }) => params._id,
         element: <DonatingMedicineDetails />,
       },
-      { path: "/about", element: <About /> },
-      { path: "/contact", element: <Contact /> },
       { path: "/signup", element: <SignUp /> },
       { path: "/signin", element: <SignIn /> },
     ],

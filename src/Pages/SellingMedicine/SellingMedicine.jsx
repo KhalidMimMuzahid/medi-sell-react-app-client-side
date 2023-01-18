@@ -262,6 +262,7 @@ const SellingMedicine = () => {
             {allMedicines &&
               allMedicines.map((eachMedicine) => (
                 <EachSellingMedicine
+                  setAllMedicines={setAllMedicines}
                   setReportModalIsOpen={setReportModalIsOpen}
                   setReportingMedicineInfo={setReportingMedicineInfo}
                   key={eachMedicine?._id}

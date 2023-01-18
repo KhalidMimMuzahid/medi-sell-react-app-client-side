@@ -90,6 +90,34 @@ const SellingMedicineDetails = () => {
         }
       });
   };
+
+  const handleMedicineBuy = () => {
+    if (medicine?.reportingStatus) {
+      return toast.error("this medicine is reported.\nyou can't buy anymore");
+    }
+    // currentUser
+    const { displayName, email, photoURL } = currentUser;
+    // console.log(displayName, "\n", email, "\n", photoURL);
+    const buyer = {
+      buyerName: displayName,
+      buyerEmail: email,
+      buyerPhotoURL: photoURL,
+    };
+    fetch(`https://medi-sell.vercel.app/buymedicine?_id=${_id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(buyer),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.modifiedCount) {
+          toast.success("medicine purchased successfully");
+          refetch();
+        } else {
+          toast.error("something went wrong, please try again");
+        }
+      });
+  };
   return (
     <div className="max-w-4xl mx-auto my-12 px-2 sm:px-12 md:px-24 ">
       <div className="card w-full bg-base-100 shadow-xl py-4">
@@ -165,6 +193,7 @@ const SellingMedicineDetails = () => {
                 prescription
               </label>
               <button
+                onClick={handleMedicineBuy}
                 disabled={sellingStatus === "sold"}
                 className="btn btn-sm btn-primary grow"
               >

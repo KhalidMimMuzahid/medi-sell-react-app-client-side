@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { MdVerified } from "react-icons/md";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import Loader from "../../../Components/Loader/Loader";
+import { MyContext } from "../../../contexts/MyProvider/MyProvider";
 const EachSellingMedicine = ({
+  setAllMedicines,
   eachMedicine,
   setReportModalIsOpen,
   setReportingMedicineInfo,
 }) => {
-  // const { currentUser } = useContext(MyContext);
+  const { currentUser } = useContext(MyContext);
   // const {
   //   register,
   //   handleSubmit,
@@ -75,6 +77,44 @@ const EachSellingMedicine = ({
   //       }
   //     });
   // };
+
+  const handleMedicineBuy = () => {
+    if (eachMedicine?.reportingStatus) {
+      return toast.error("this medicine is reported.\nyou can't buy anymore");
+    }
+    // currentUser
+    const { displayName, email, photoURL } = currentUser;
+    // console.log(displayName, "\n", email, "\n", photoURL);
+    const buyer = {
+      buyerName: displayName,
+      buyerEmail: email,
+      buyerPhotoURL: photoURL,
+    };
+    fetch(`https://medi-sell.vercel.app/buymedicine?_id=${_id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(buyer),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.modifiedCount) {
+          toast.success("medicine purchased successfully");
+
+          setAllMedicines((allMedicines) => {
+            const newAllMedicine = allMedicines.map((eachStateallMedicines) => {
+              if (eachStateallMedicines._id === eachMedicine._id) {
+                eachStateallMedicines.sellingStatus = "sold";
+                console.log("id match: ", eachStateallMedicines);
+              }
+              return eachStateallMedicines;
+            });
+            return newAllMedicine;
+          });
+        } else {
+          toast.error("something went wrong, please try again");
+        }
+      });
+  };
   return (
     <div className="card w-full bg-base-100 shadow-xl">
       <div className="card-body px-2">
@@ -139,6 +179,7 @@ const EachSellingMedicine = ({
               <button> details</button>
             </Link>
             <button
+              onClick={handleMedicineBuy}
               disabled={sellingStatus === "sold"}
               className="btn btn-sm btn-primary grow"
             >

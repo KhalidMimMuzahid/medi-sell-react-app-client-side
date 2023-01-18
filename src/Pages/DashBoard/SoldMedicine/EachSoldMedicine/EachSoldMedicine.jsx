@@ -1,30 +1,32 @@
 import React from "react";
 import { toast } from "react-toastify";
 
-const EachDonatedMedicine = ({
+const EachSoldMedicine = ({
   refetch,
-  setRecipientNGO,
-  eachDonatedMedicine,
-  setRecipientNGOInfoModalIsOpen,
+  setBuyer,
+  eachSoldMedicine,
+  setBuyerInfoModalIsOpen,
 }) => {
   const {
-    donatingStatus,
-    expiredDate,
-    medicineName,
-    postDate,
-    prescriptionReport,
-    quantity,
-
-    type,
     _id,
-  } = eachDonatedMedicine;
+    medicineName,
+    newPrice,
+    offerPrice,
+    quantity,
+    expiredDate,
+    postDate,
+    type,
+    sellingStatus,
+    payingStatus,
+    prescriptionReport,
+  } = eachSoldMedicine;
   const handleMedicineDelete = () => {
     const isAgree = window.confirm(
       `Are you sure you want to retrieve ${medicineName} ?`
     );
     if (isAgree) {
       fetch(
-        `https://medi-sell.vercel.app/deletdonatingmedicine?_id=${eachDonatedMedicine?._id}`,
+        `https://medi-sell.vercel.app/deletsellingmedicine?_id=${eachSoldMedicine?._id}`,
         {
           method: "DELETE",
         }
@@ -59,24 +61,22 @@ const EachDonatedMedicine = ({
         </div>
         <div class="flex flex-col gap-1 items-center text-base font-semibold text-gray-900 dark:text-white">
           <label
-            disabled={!eachDonatedMedicine?.recipientNGO}
+            disabled={!eachSoldMedicine?.buyer}
             onClick={() => {
-              setRecipientNGOInfoModalIsOpen(true);
-              setRecipientNGO(eachDonatedMedicine?.recipientNGO);
+              setBuyerInfoModalIsOpen(true);
+              setBuyer(eachSoldMedicine?.buyer);
             }}
             className="btn btn-primary btn-xs "
-            htmlFor="recipientNGO-info"
+            htmlFor="buyer-info"
           >
-            {eachDonatedMedicine?.recipientNGO
-              ? "recipient NGO"
-              : "not sold yet"}
+            {eachSoldMedicine?.buyer ? "buyer info" : "not sold yet"}
           </label>
           <button
-            disabled={eachDonatedMedicine?.recipientNGO}
+            disabled={eachSoldMedicine?.buyer}
             onClick={handleMedicineDelete}
             className="btn btn-primary btn-xs"
           >
-            {eachDonatedMedicine?.recipientNGO ? "Donated" : "get back"}
+            {eachSoldMedicine?.buyer ? "sold Out" : "get back"}
           </button>
         </div>
       </div>
@@ -84,4 +84,4 @@ const EachDonatedMedicine = ({
   );
 };
 
-export default EachDonatedMedicine;
+export default EachSoldMedicine;

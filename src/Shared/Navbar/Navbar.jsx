@@ -6,6 +6,7 @@ import { MyContext } from "../../contexts/MyProvider/MyProvider";
 import profileDemo from "../../assets/images/profileDemo.png";
 import useRole from "../../useHooks/useRole/useRole";
 import Loader from "../../Components/Loader/Loader";
+import { NavHashLink } from "react-router-hash-link";
 const Navbar = ({ setThemeIsDark, themeIsDark }) => {
   const { currentUser, logOut } = useContext(MyContext);
   const location = useLocation().pathname;
@@ -19,11 +20,10 @@ const Navbar = ({ setThemeIsDark, themeIsDark }) => {
       </div>
     );
   }
-
   const navElements = [
     { navElement: "Home", link: "/" },
-    { navElement: "About Us", link: "/about" },
-    { navElement: "Contact Us", link: "/contact" },
+    { navElement: "About Us", link: "/#about" },
+    { navElement: "Contact Us", link: "/#contact-us" },
     { navElement: "DashBoard", link: "/dashboard" },
   ];
   const roleElements = (
@@ -84,11 +84,18 @@ const Navbar = ({ setThemeIsDark, themeIsDark }) => {
               tabIndex={0}
               className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
             >
+              {/* <NavHashLink
+  to="/some/path#with-hash-fragment"
+  activeClassName="selected"
+  activeStyle={{ color: 'red' }}
+  // etc...
+>Link to Hash Fragment</NavHashLink> */}
+
               {navElements?.map((eachElement) => (
                 <li>
-                  <Link to={eachElement?.link} className="font-bold">
+                  <NavHashLink to={eachElement?.link} className="font-bold">
                     {eachElement?.navElement}
-                  </Link>
+                  </NavHashLink>
                 </li>
               ))}
               {roleElements}

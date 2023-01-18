@@ -91,6 +91,9 @@ const DonatingMedicineDetails = () => {
       });
   };
   const handleTakeDonatedMedicine = () => {
+    if (medicine?.reportingStatus) {
+      return toast.error("this medicine is reported.\nyou can't take anymore");
+    }
     const { displayName, email, photoURL } = currentUser;
     const medicineTakerNGOInfo = {
       ngoName: displayName,

@@ -9,9 +9,6 @@ const Home = () => {
       <Carosel />
       <About />
       <Contact />
-      <div>
-        <h1 id="contact">xxxxxxxxxxxxxxxxxxxxx</h1>
-      </div>
     </div>
   );
 };

@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { RiMenu2Fill, RiMenu3Line } from "react-icons/ri";
 import mediSell from "../../assets/logos/mediSell.png";
 import { MyContext } from "../../contexts/MyProvider/MyProvider";
-import profileDemo from "../../assets/images/profileDemo.png";
+import profileDemo from "../../assets/images/profileDemo.jpg";
 import useRole from "../../useHooks/useRole/useRole";
 import Loader from "../../Components/Loader/Loader";
 import { NavHashLink } from "react-router-hash-link";
@@ -22,8 +22,8 @@ const Navbar = ({ setThemeIsDark, themeIsDark }) => {
   }
   const navElements = [
     { navElement: "Home", link: "/" },
-    { navElement: "About Us", link: "/#about" },
-    { navElement: "Contact Us", link: "/#contact-us" },
+    { navElement: "About Us", link: "/about" },
+    { navElement: "Contact Us", link: "/contact" },
     { navElement: "DashBoard", link: "/dashboard" },
   ];
   const roleElements = (
@@ -93,9 +93,9 @@ const Navbar = ({ setThemeIsDark, themeIsDark }) => {
 
               {navElements?.map((eachElement) => (
                 <li>
-                  <NavHashLink to={eachElement?.link} className="font-bold">
+                  <Link to={eachElement?.link} className="font-bold">
                     {eachElement?.navElement}
-                  </NavHashLink>
+                  </Link>
                 </li>
               ))}
               {roleElements}
@@ -109,9 +109,9 @@ const Navbar = ({ setThemeIsDark, themeIsDark }) => {
           </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">
+          <ul className="menu menu-horizontal px-1 ">
             {navElements?.map((eachElement) => (
-              <li>
+              <li className="">
                 <Link to={eachElement?.link} className="font-bold">
                   {eachElement?.navElement}
                 </Link>

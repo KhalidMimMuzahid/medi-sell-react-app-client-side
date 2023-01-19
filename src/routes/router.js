@@ -16,6 +16,8 @@ import SoldMedicine from "../Pages/DashBoard/SoldMedicine/SoldMedicine";
 import DonatingMedicine from "../Pages/DonatingMedicine/DonatingMedicine";
 import DonatingMedicineDetails from "../Pages/DonatingMedicine/DonatingMedicineDetails/DonatingMedicineDetails";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
+import About from "../Pages/Home/About/About";
+import Contact from "../Pages/Home/Contact/Contact";
 import Home from "../Pages/Home/Home";
 import SellingMedicine from "../Pages/SellingMedicine/SellingMedicine";
 import SellingMedicineDetails from "../Pages/SellingMedicine/SellingMedicineDetails/SellingMedicineDetails";
@@ -68,6 +70,10 @@ export const router = createBrowserRouter([
         loader: async ({ params }) => params._id,
         element: <DonatingMedicineDetails />,
       },
+
+      { path: "/about", element: <About /> },
+      { path: "/contact", element: <Contact /> },
+
       { path: "/signup", element: <SignUp /> },
       { path: "/signin", element: <SignIn /> },
     ],

@@ -3,13 +3,13 @@ import React, { useContext, useState } from "react";
 import Loader from "../../../Components/Loader/Loader";
 import { MyContext } from "../../../contexts/MyProvider/MyProvider";
 import EachDonatedMedicine from "./EachDonatedMedicine/EachDonatedMedicine";
-
+import { MdVerified } from "react-icons/md";
 const DonatedMedicine = () => {
   const { currentUser } = useContext(MyContext);
   const [recipientNGO, setRecipientNGO] = useState(null);
   const [recipientNGOInfoModalIsOpen, setRecipientNGOInfoModalIsOpen] =
     useState(false);
-
+  // console.log(recipientNGO);
   const {
     data: donatedMedicines = [],
     error,
@@ -90,7 +90,10 @@ const DonatedMedicine = () => {
                     </div>
                     <div>
                       <h1 className="font-bold">
-                        name: {recipientNGO?.ngoName}
+                        name: {recipientNGO?.ngoName}{" "}
+                        {recipientNGO?.NGOVerified && (
+                          <MdVerified className="inline text-2xl text-green-700" />
+                        )}
                       </h1>
                       <h1 className="font-bold">
                         Email: {recipientNGO?.ngoEmail}

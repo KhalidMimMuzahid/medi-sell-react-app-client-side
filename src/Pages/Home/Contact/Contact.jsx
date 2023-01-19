@@ -2,7 +2,7 @@ import React from "react";
 
 const Contact = () => {
   return (
-    <div className="  min-h-full px-8 lg:px-0 my-8" id="contact-us">
+    <div className="  min-h-full px-8 lg:px-2 my-8" id="contact-us">
       <div className="z-0 flex items-center justify-center w-auto gap-12 p-4 px-0 flex-col lg:flex-row">
         <div className="text-center lg:text-left">
           <h1 className="text-5xl font-bold">Contact Us</h1>
@@ -22,7 +22,7 @@ const Contact = () => {
               <input
                 disabled
                 type="text"
-                defaultValue="usedbikes@resell.com"
+                defaultValue="contact@medi_Sell.com"
                 placeholder="email"
                 className="input input-bordered"
               />

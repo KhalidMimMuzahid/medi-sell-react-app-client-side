@@ -35,12 +35,8 @@ const DonateMedicine = () => {
     const { email, photoURL, displayName } = currentUser;
     const today = new Date();
     const postDate = format(today, "PP");
-    const {
-      medicineName,
-      expiredDate,
-      prescriptionReport,
-      quantity: quantityString,
-    } = data;
+    const { medicineName, prescriptionReport, quantity: quantityString } = data;
+    const expiredDate = format(selectedDay, "PP");
     const quantity = parseInt(quantityString);
     const image = prescriptionReport[0];
     // console.log(

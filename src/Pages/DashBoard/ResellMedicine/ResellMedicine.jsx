@@ -39,10 +39,11 @@ const ResellMedicine = () => {
       medicineName,
       newPrice: newPriceString,
       offerPrice: offerPriceString,
-      expiredDate,
       prescriptionReport,
       quantity: quantityString,
     } = data;
+
+    const expiredDate = format(selectedDay, "PP");
     const quantity = parseInt(quantityString);
     const newPrice = parseInt(newPriceString);
     const offerPrice = parseInt(offerPriceString);

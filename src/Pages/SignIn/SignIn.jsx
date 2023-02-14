@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Loader from "../../Components/Loader/Loader";
 import { MyContext } from "../../contexts/MyProvider/MyProvider";
 import checkAlreadyUser from "../../utilities/checkAlreadyUser/checkAlreadyUser";
@@ -20,6 +20,9 @@ const SignIn = () => {
     watch,
     formState: { errors },
   } = useForm();
+  const location = useLocation();
+  const from = location?.state?.from?.pathname || "/";
+  console.log(from);
   const navigate = useNavigate();
   //   const [passwordError, setPasswordError] = useState("");
   const [isSignInLoading, setIsSignInLoading] = useState(false);
@@ -55,7 +58,9 @@ const SignIn = () => {
                   if (data?.acknowledged) {
                     setIsSignInLoading(false);
                     // toast.success("user created successfully");
-                    navigate("/");
+                    setTimeout(() => {
+                      navigate(from, { replace: true });
+                    }, 100);
                   }
                 });
             } else {
@@ -63,7 +68,9 @@ const SignIn = () => {
               // console.log("the user is already in database");
               setIsSignInLoading(false);
               // toast.success("user created successfully");
-              navigate("/");
+              setTimeout(() => {
+                navigate(from, { replace: true });
+              }, 100);
             }
           });
       })
@@ -88,11 +95,14 @@ const SignIn = () => {
     emailPasswordSignIn(email, password)
       .then((userCredential) => {
         // Signed in
-        // const user = userCredential.user;
-        // console.log(user);
+        const user = userCredential.user;
+        console.log("signin user: ", user);
         console.log("user sign in succesfully");
         setIsSignInLoading(false);
-        navigate("/");
+        setTimeout(() => {
+          navigate(from, { replace: true });
+        }, 100);
+
         // ...
       })
       .catch((error) => {

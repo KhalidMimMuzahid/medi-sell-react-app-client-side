@@ -183,7 +183,7 @@ const DonatingMedicine = () => {
   };
   return (
     <div className="w-full flex flex-col items-center px-6 md:mt-8">
-      <h1>this is donating medicine</h1>
+      <h1>Medicine For Take</h1>
       <div className="w-full max-w-md  md:max-w-md lg:max-w-lg mb-4">
         <form onSubmit={handleFormSubmit}>
           <label

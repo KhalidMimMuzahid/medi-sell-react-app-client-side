@@ -91,8 +91,8 @@ const Navbar = ({ setThemeIsDark, themeIsDark }) => {
   // etc...
 >Link to Hash Fragment</NavHashLink> */}
 
-              {navElements?.map((eachElement) => (
-                <li>
+              {navElements?.map((eachElement, i) => (
+                <li key={i}>
                   <Link to={eachElement?.link} className="font-bold">
                     {eachElement?.navElement}
                   </Link>
@@ -110,8 +110,8 @@ const Navbar = ({ setThemeIsDark, themeIsDark }) => {
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1 ">
-            {navElements?.map((eachElement) => (
-              <li className="">
+            {navElements?.map((eachElement, i) => (
+              <li key={i} className="">
                 <Link to={eachElement?.link} className="font-bold">
                   {eachElement?.navElement}
                 </Link>
@@ -129,7 +129,7 @@ const Navbar = ({ setThemeIsDark, themeIsDark }) => {
               })
             }
             type="checkbox"
-            className="toggle  md:toggle-lg  mx-2"
+            className="toggle  md:toggle-lg  mx-2 "
             checked={themeIsDark}
           />
           {location.startsWith("/dashboard") && (

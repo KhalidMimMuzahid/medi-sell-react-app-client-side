@@ -27,11 +27,13 @@ const Footer = () => {
         
         </div> */}
           <div className="flex md:justify-start ">
-            {contactLinks.map((el) => (
+            {contactLinks.map((el, i) => (
               <a
+                key={i}
                 target="_blank"
                 href={el.link}
                 className="mr-5 cursor-pointer mt-8 hover:scale-125"
+                rel="noreferrer"
               >
                 {/* <img alt="" src={el.url} /> */}
                 {el.logo}

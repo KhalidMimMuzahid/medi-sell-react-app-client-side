@@ -196,7 +196,7 @@ const DonatingMedicineDetails = () => {
                 className="btn btn-sm btn-primary grow"
                 htmlFor="prescription-modal"
               >
-                prescription
+                Cash memo
               </label>
               <button
                 onClick={handleTakeDonatedMedicine}

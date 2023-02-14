@@ -12,9 +12,9 @@ const Main = () => {
       setThemeIsDark(newTheme);
     }
   }, []);
-  // data-theme={themeIsDark ? "dark" : "light"}
+
   return (
-    <div data-theme="valentine">
+    <div data-theme={themeIsDark ? "dark" : "valentine"}>
       <Navbar setThemeIsDark={setThemeIsDark} themeIsDark={themeIsDark} />
       <div className="min-h-screen">
         <Outlet />

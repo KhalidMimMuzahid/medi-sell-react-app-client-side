@@ -43,7 +43,7 @@ const DashBoard = () => {
             className="btn btn-primary text-white my-1 focus:text-black"
             to="donatedstocks"
           >
-            donated Stocks
+            adopted medicines
           </Link>
         </li>
         <li>
@@ -60,6 +60,14 @@ const DashBoard = () => {
             to="ourvolunteers"
           >
             our volunteers
+          </Link>
+        </li>
+        <li>
+          <Link
+            className="btn btn-primary text-white my-1 focus:text-black"
+            to="code-scanner"
+          >
+            Code Scanner
           </Link>
         </li>
       </>
@@ -85,25 +93,25 @@ const DashBoard = () => {
         <li>
           <Link
             className="btn btn-primary text-white my-1 focus:text-black"
-            to="soldmedicine"
+            to="mystock"
           >
-            sold Medicine
+            my Stock
           </Link>
         </li>
-        <li>
+        {/* <li>
           <Link
             className="btn btn-primary text-white my-1 focus:text-black"
             to="donatedmedicine"
           >
-            donated Medicine
+            for-donated
           </Link>
-        </li>
+        </li> */}
         <li>
           <Link
             className="btn btn-primary text-white my-1 focus:text-black"
             to="mymedicines"
           >
-            my medicines
+            my purchased
           </Link>
         </li>
         <li>
@@ -112,6 +120,14 @@ const DashBoard = () => {
             to="mybuyer"
           >
             my buyer
+          </Link>
+        </li>
+        <li>
+          <Link
+            className="btn btn-primary text-white my-1 focus:text-black"
+            to="code-scanner"
+          >
+            Code Scanner
           </Link>
         </li>
       </>

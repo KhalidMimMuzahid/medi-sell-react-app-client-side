@@ -190,7 +190,7 @@ const SellingMedicineDetails = () => {
                 className="btn btn-sm btn-primary grow"
                 htmlFor="prescription-modal"
               >
-                prescription
+                Cash Memo
               </label>
               <button
                 onClick={handleMedicineBuy}

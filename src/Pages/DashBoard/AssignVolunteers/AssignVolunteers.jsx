@@ -4,6 +4,7 @@ import { format } from "date-fns";
 import { MyContext } from "../../../contexts/MyProvider/MyProvider";
 import uploadImageToImageBB from "../../../utilities/uploadImageToImageBB/uploadImageToImageBB";
 import { toast } from "react-toastify";
+import Loader from "../../../Components/Loader/Loader";
 const AssignVolunteers = () => {
   const {
     register,
@@ -13,8 +14,9 @@ const AssignVolunteers = () => {
     formState: { errors },
   } = useForm();
   const { currentUser } = useContext(MyContext);
-
+  const [isPosting, setIsPosting] = useState(false);
   const handleFormSubmit = (data) => {
+    setIsPosting(true);
     console.log(data);
     const { email } = currentUser;
     const today = new Date();
@@ -63,6 +65,7 @@ const AssignVolunteers = () => {
             .then((res) => res.json())
             .then((data) => {
               if (data?.acknowledged) {
+                setIsPosting(false);
                 toast.success("medicine updated successfully");
               }
               // console.log(data);
@@ -71,6 +74,7 @@ const AssignVolunteers = () => {
         } else {
           toast.error("something went wrong. Please try again later");
           reset();
+          setIsPosting(false);
           return;
         }
       });
@@ -211,11 +215,13 @@ const AssignVolunteers = () => {
             )}
           </div>
           <button
+            disabled={isPosting}
             type="submit"
             className="text-white bg-primary hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full  px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
             Submit
           </button>
+          {isPosting && <Loader type="progressor" />}
         </form>
       </div>
     </div>

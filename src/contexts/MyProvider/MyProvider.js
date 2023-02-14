@@ -18,24 +18,29 @@ export const MyContext = createContext();
 
 const MyProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState({});
-  const [isLOading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [role, setRole] = useState("");
   const [isRoleLoading, setIsRoleLoading] = useState(true);
 
   const provider = new GoogleAuthProvider();
   const googleSignIn = () => {
+    setIsLoading(true);
     return signInWithPopup(auth, provider);
   };
   const emailPasswordSignIn = (email, password) => {
+    setIsLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
   const createUserWithEmail = (email, password) => {
+    setIsLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
   const updateUserProfile = (userInfo) => {
+    setIsLoading(true);
     return updateProfile(auth.currentUser, userInfo);
   };
   const logOut = () => {
+    setIsLoading(true);
     return signOut(auth);
   };
   useEffect(() => {
@@ -44,7 +49,7 @@ const MyProvider = ({ children }) => {
       setIsLoading(false);
     });
     return () => unSUbscribe();
-  }, []);
+  });
 
   // useEffect(() => {
   //   if (currentUser && currentUser?.email) {
@@ -67,6 +72,7 @@ const MyProvider = ({ children }) => {
     setRole,
     isRoleLoading,
     setIsRoleLoading,
+    isLoading,
   };
   return <MyContext.Provider value={info}>{children}</MyContext.Provider>;
 };

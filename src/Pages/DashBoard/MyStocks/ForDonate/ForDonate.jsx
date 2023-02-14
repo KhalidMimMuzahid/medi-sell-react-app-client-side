@@ -1,10 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useContext, useState } from "react";
-import Loader from "../../../Components/Loader/Loader";
-import { MyContext } from "../../../contexts/MyProvider/MyProvider";
-import EachDonatedMedicine from "./EachDonatedMedicine/EachDonatedMedicine";
+import React from "react";
+import { useState } from "react";
+import { useContext } from "react";
 import { MdVerified } from "react-icons/md";
-const DonatedMedicine = () => {
+import Loader from "../../../../Components/Loader/Loader";
+import { MyContext } from "../../../../contexts/MyProvider/MyProvider";
+import EachDonatedMedicine from "./EachDonatedMedicine/EachDonatedMedicine";
+
+const ForDonate = () => {
   const { currentUser } = useContext(MyContext);
   const [recipientNGO, setRecipientNGO] = useState(null);
   const [recipientNGOInfoModalIsOpen, setRecipientNGOInfoModalIsOpen] =
@@ -34,7 +37,6 @@ const DonatedMedicine = () => {
       </div>
     );
   }
-
   return (
     <div className="w-full mx-auto">
       <div class="w-full mx-auto max-w-2xl border p-4 bg-white rounded-lg shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
@@ -110,4 +112,4 @@ const DonatedMedicine = () => {
   );
 };
 
-export default DonatedMedicine;
+export default ForDonate;

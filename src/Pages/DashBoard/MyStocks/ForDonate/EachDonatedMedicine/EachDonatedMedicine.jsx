@@ -19,26 +19,21 @@ const EachDonatedMedicine = ({
     _id,
   } = eachDonatedMedicine;
   const handleMedicineDelete = () => {
-    const isAgree = window.confirm(
-      `Are you sure you want to retrieve ${medicineName} ?`
-    );
-    if (isAgree) {
-      fetch(
-        `https://medi-sell.vercel.app/deletdonatingmedicine?_id=${eachDonatedMedicine?._id}`,
-        {
-          method: "DELETE",
+    fetch(
+      `https://medi-sell.vercel.app/deletdonatingmedicine?_id=${eachDonatedMedicine?._id}`,
+      {
+        method: "DELETE",
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.deletedCount === 1) {
+          toast.success(`${medicineName} was successfully retrieved`);
+          refetch();
+        } else {
+          toast.error("something went wrong, please try again");
         }
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          if (data?.deletedCount === 1) {
-            toast.success(`${medicineName} was successfully retrieved`);
-            refetch();
-          } else {
-            toast.error("something went wrong, please try again");
-          }
-        });
-    }
+      });
   };
   return (
     <li class="py-3 sm:py-4">
@@ -71,15 +66,45 @@ const EachDonatedMedicine = ({
               ? "recipient NGO"
               : "not sold yet"}
           </label>
-          <button
+          <label
+            htmlFor="confirm-deletion-modal"
             disabled={eachDonatedMedicine?.recipientNGO}
-            onClick={handleMedicineDelete}
+            // onClick={handleMedicineDelete}
             className="btn btn-primary btn-xs"
           >
             {eachDonatedMedicine?.recipientNGO ? "Donated" : "get back"}
-          </button>
+          </label>
         </div>
       </div>
+      <>
+        <input
+          type="checkbox"
+          id="confirm-deletion-modal"
+          className="modal-toggle"
+        />
+        <div className="modal">
+          <div className="modal-box">
+            <h3 className="font-bold text-lg">
+              {`Are you sure you want to retrieve ${medicineName} ?`}
+            </h3>
+            <div className="modal-action flex justify-between gap-2">
+              <label
+                htmlFor="confirm-deletion-modal"
+                className="btn grow btn-primary"
+                onClick={handleMedicineDelete}
+              >
+                Confirm
+              </label>
+              <label
+                htmlFor="confirm-deletion-modal"
+                className="btn grow btn-primary"
+              >
+                Cancel
+              </label>
+            </div>
+          </div>
+        </div>
+      </>
     </li>
   );
 };

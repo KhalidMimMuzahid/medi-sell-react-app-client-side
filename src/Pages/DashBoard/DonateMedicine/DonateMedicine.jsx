@@ -196,7 +196,7 @@ const DonateMedicine = () => {
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               htmlFor="prescription-report"
             >
-              prescription
+              Cash Memo
             </label>
             <input
               {...register("prescriptionReport", {

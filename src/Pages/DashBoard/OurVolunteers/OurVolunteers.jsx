@@ -70,9 +70,9 @@ const OurVolunteers = () => {
                 >
                   ✕
                 </label>
-                <div>
+                <div className="flex justify-center ">
                   {/* NGOEmail, assigningDate, volunteerAddress, volunteerEmail, volunteerName, volunteerPhoneNo, volunteerPhoto, _id   */}
-                  <div className="">
+                  <div className=" flex justify-center items-center">
                     <div>
                       <img
                         className="img-fluid max-w-full "
@@ -80,7 +80,7 @@ const OurVolunteers = () => {
                         alt=""
                       />
                     </div>
-                    <div>
+                    <div className="ml-4">
                       <h1 className="font-bold">
                         name: {volunteerInfo?.volunteerName}
                       </h1>

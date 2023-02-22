@@ -26,14 +26,14 @@ const DashBoard = () => {
         {/* <li>
           <Link to="approvals">approvals</Link>
         </li> */}
-        <li>
+        {/* <li>
           <Link
             className="btn btn-primary text-white my-1 focus:text-black"
             to="reportedmedicines"
           >
             reported medicines
           </Link>
-        </li>
+        </li> */}
       </>
     ),
     ngoDashboard: (
@@ -111,17 +111,17 @@ const DashBoard = () => {
             className="btn btn-primary text-white my-1 focus:text-black"
             to="mymedicines"
           >
-            my purchased
+            my cart
           </Link>
         </li>
-        <li>
+        {/* <li>
           <Link
             className="btn btn-primary text-white my-1 focus:text-black"
             to="mybuyer"
           >
             my buyer
           </Link>
-        </li>
+        </li> */}
         <li>
           <Link
             className="btn btn-primary text-white my-1 focus:text-black"

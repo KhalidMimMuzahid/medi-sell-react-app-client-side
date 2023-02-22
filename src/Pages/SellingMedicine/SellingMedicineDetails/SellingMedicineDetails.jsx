@@ -185,20 +185,20 @@ const SellingMedicineDetails = () => {
               </div>
             </div>
 
-            <div className="flex md:flex-col justify-between gap-2  p-0">
+            <div className="flex md:flex-col justify-between  gap-2  p-0 ">
               <label
                 className="btn btn-sm btn-primary grow"
                 htmlFor="prescription-modal"
               >
                 Cash Memo
               </label>
-              <button
+              <label
                 onClick={handleMedicineBuy}
                 disabled={sellingStatus === "sold"}
                 className="btn btn-sm btn-primary grow"
               >
-                {sellingStatus === "sold" ? "Stock Out" : "Buy"}
-              </button>
+                {sellingStatus === "sold" ? "Stock Out" : "Add to Cart"}
+              </label>
               <label
                 onClick={() => setReportModalIsOpen(true)}
                 htmlFor="report-modal"

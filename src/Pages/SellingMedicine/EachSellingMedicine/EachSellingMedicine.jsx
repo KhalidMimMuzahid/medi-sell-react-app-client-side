@@ -172,19 +172,24 @@ const EachSellingMedicine = ({
           </div>
 
           <div className="flex md:flex-col justify-between gap-2  p-0">
-            <Link
+            {/* <Link
               to={`/sellingmedicine/medicinedetails/${_id}`}
-              className="btn btn-sm btn-primary grow"
+              className="btn btn-sm btn-primary grow hover:cursor-pointer"
             >
-              <button> details</button>
-            </Link>
-            <button
+              details
+            </Link> */}
+            <label className="btn btn-sm btn-primary grow hover:cursor-pointer">
+              <Link to={`/sellingmedicine/medicinedetails/${_id}`}>
+                details
+              </Link>
+            </label>
+            <label
               onClick={handleMedicineBuy}
               disabled={sellingStatus === "sold"}
               className="btn btn-sm btn-primary grow"
             >
-              {sellingStatus === "sold" ? "Sold Out" : "buy"}
-            </button>
+              {sellingStatus === "sold" ? "Stock Out" : "add to cart"}
+            </label>
             <label
               htmlFor="report-modal"
               onClick={() => {
